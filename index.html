@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="VYRO — power your everyday. Discover everyday tech accessories.">
+  <meta name="theme-color" content="#0b0f14">
+  <title>VYRO | Power Your Everyday</title>
+  <style>
+    :root{--bg:#0b0f14;--panel:#121821;--muted:#252b35;--line:#343c49;--text:#f8fafc;--sub:#9ca3af;--blue:#2563eb;--blue2:#d6e4ff}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Lato,Arial,sans-serif}
+    header{border-bottom:1px solid var(--line);position:sticky;top:0;background:#0b0f14ee;backdrop-filter:blur(12px);z-index:3}
+    .nav{max-width:1100px;margin:auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo{font-size:28px;letter-spacing:5px;font-weight:900}.tag{font-size:10px;letter-spacing:2px;color:var(--sub)}
+    button,.btn{border:0;border-radius:10px;padding:11px 15px;background:var(--blue);color:white;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center}
+    button.secondary,.btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
+    main{max-width:1100px;margin:auto;padding:28px 22px 60px}
+    .hero{padding:48px 0 35px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center}
+    h1{font-size:clamp(38px,7vw,70px);line-height:1.02;letter-spacing:-2px;margin:12px 0 18px}
+    .eyebrow{color:var(--blue2);letter-spacing:3px;font-size:12px;font-weight:800}
+    p{color:var(--sub)}.hero-card{background:linear-gradient(145deg,#182337,#10151d);border:1px solid var(--line);border-radius:22px;padding:30px;min-height:220px;display:flex;flex-direction:column;justify-content:center}
+    .hero-mark{font-size:clamp(42px,8vw,72px);font-weight:900;letter-spacing:8px;text-align:center}
+    .hero-tag{text-align:center;font-size:10px;letter-spacing:3px;color:var(--blue2)}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:22px 0}
+    h2{font-size:26px;margin:0} .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .product{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    .product-art{height:170px;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#293a59,#151c27 70%);font-size:52px}
+    .product-info{padding:17px}.product h3{margin:0 0 5px;font-size:18px}.price{font-size:20px;font-weight:800;margin:12px 0}.small{font-size:12px;color:var(--sub)}
+    .actions{display:flex;gap:8px}.actions button{flex:1}.cart-panel{margin-top:26px;padding:20px;border:1px solid var(--line);border-radius:16px;background:#10151d}
+    .cart-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+    .cart-total{display:flex;justify-content:space-between;font-size:20px;font-weight:800;padding:16px 0}
+    .notice{border:1px solid #475569;background:#111827;padding:12px 14px;border-radius:10px;font-size:13px;color:#cbd5e1;margin-top:12px}
+    footer{border-top:1px solid var(--line);padding:25px 22px;text-align:center;color:var(--sub);font-size:13px}
+    @media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:30px}.grid{grid-template-columns:1fr}.product-art{height:140px}.section-head{align-items:start;flex-direction:column}.nav{padding:13px 16px}main{padding:20px 16px 45px}}
+  </style>
+</head>
+<body>
+<header><div class="nav"><div><div class="logo">VYRO</div><div class="tag">POWER YOUR EVERYDAY</div></div><button class="secondary" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">Cart (<span id="cartCount">0</span>)</button></div></header>
+<main>
+  <section class="hero">
+    <div><div class="eyebrow">EVERYDAY TECH. BETTER DESIGNED.</div><h1>Power your<br>everyday.</h1><p>Discover practical tech accessories for music, work and life on the move.</p><a class="btn" href="#products">Explore products</a></div>
+    <div class="hero-card"><div class="hero-mark">VYRO</div><div class="hero-tag">TECH ESSENTIALS</div></div>
+  </section>
+  <section id="products">
+    <div class="section-head"><div><div class="eyebrow">THE COLLECTION</div><h2>Featured products</h2></div><div class="small">Demo products — edit names and prices before publishing.</div></div>
+    <div class="grid" id="productGrid"></div>
+  </section>
+  <section class="cart-panel" id="cart">
+    <div class="section-head"><div><div class="eyebrow">YOUR SELECTION</div><h2>Shopping cart</h2></div><button class="secondary" onclick="clearCart()">Clear cart</button></div>
+    <div id="cartItems"><p>Your cart is empty.</p></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <div class="actions"><button onclick="checkout()">Continue to checkout</button></div>
+    <div class="notice" id="checkoutNotice">Checkout is not connected yet. Before accepting real orders, configure a payment provider and a secure order-handling method. Do not enter or store card details on this demo site.</div>
+  </section>
+</main>
+<footer>© <span id="year"></span> VYRO. Power your everyday.</footer>
+<script>
+  // Replace these sample products with your real products and correct prices.
+  const products = [
+    {id:1,name:"TWS ENC Wireless Earbuds",price:799,icon:"🎧",desc:"Black & white · Everyday listening"},
+    {id:2,name:"Fast Charging Cable",price:199,icon:"🔌",desc:"Everyday charging essential"},
+    {id:3,name:"Compact Phone Stand",price:249,icon:"📱",desc:"A handy desk companion"}
+  ];
+  const cart = {};
+  const money = n => new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);
+  function renderProducts(){
+    document.getElementById("productGrid").innerHTML=products.map(p=>`<article class="product"><div class="product-art" aria-hidden="true">${p.icon}</div><div class="product-info"><h3>${p.name}</h3><div class="small">${p.desc}</div><div class="price">${money(p.price)}</div><div class="actions"><button onclick="addToCart(${p.id})">Add to cart</button></div></div></article>`).join("");
+  }
+  function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
+  function changeQty(id,delta){cart[id]=(cart[id]||0)+delta;if(cart[id]<=0)delete cart[id];renderCart()}
+  function clearCart(){Object.keys(cart).forEach(k=>delete cart[k]);renderCart()}
+  function renderCart(){
+    const ids=Object.keys(cart),count=ids.reduce((s,id)=>s+cart[id],0),total=ids.reduce((s,id)=>s+products.find(p=>p.id==id).price*cart[id],0);
+    document.getElementById("cartCount").textContent=count;document.getElementById("cartTotal").textContent=money(total);
+    document.getElementById("cartItems").innerHTML=ids.length?ids.map(id=>{const p=products.find(x=>x.id==id);return `<div class="cart-row"><span>${p.name} × ${cart[id]}</span><span>${money(p.price*cart[id])} <button class="secondary" style="padding:3px 8px;margin-left:6px" onclick="changeQty(${id},-1)" aria-label="Remove one">−</button><button class="secondary" style="padding:3px 8px" onclick="changeQty(${id},1)" aria-label="Add one">+</button></span></div>`}).join(""):"<p>Your cart is empty.</p>";
+  }
+  function checkout(){
+    const ids=Object.keys(cart);if(!ids.length){alert("Add a product to your cart first.");return}
+    document.getElementById("checkoutNotice").textContent="Your cart total is "+document.getElementById("cartTotal").textContent+". This demo checkout is not connected to a payment gateway or order system yet. Do not advertise this as ready for payment until a provider and secure order flow are configured.";
+  }
+  document.getElementById("year").textContent=new Date().getFullYear();renderProducts();renderCart();
+</script>
+</body>
+</html>
